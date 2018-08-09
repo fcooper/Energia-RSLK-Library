@@ -1,32 +1,41 @@
 #include "Energia.h"
+#include "RSLK_Encoder.h"
+#include "RSLK_Motor.h"
+#include "RSLK_BPSW.h"
+#include "RSLK_DistanceSensor.h"
+
+#define RSLK_LMOTOR = 0
+#define RSLK_RMOTOR = 1;
+
+#define RSLK_LENCODER = 0;
+#define RSLK_RENCODER = 1;
+
+#define RSLK_BP_SW_1 = 0;
+#define RSLK_BP_SW_2 = 1;
+#define RSLK_BP_SW_3 = 2;
+#define RSLK_BP_SW_4 = 3;
+#define RSLK_BP_SW_5 = 4;
+#define RSLK_BP_SW_6 = 5;
+
+#define RSLK_DST_LEFT = 0;
+#define RSLK_DST_CENTER = 1;
+#define RSLK_DST_RIGHT = 2;
+
 
 class RSLKLib 
 {
     private:
-        uint8_t bump_sw_pin[6];
-        uint8_t ir_sensor_pin[3];
-        uint8_t left_slp_pin;
-        uint8_t left_dir_pin;
-        uint8_t left_pwm_pin;
-        uint8_t right_slp_pin;
-        uint8_t right_dir_pin;
-        uint8_t right_pwm_pin;
-        uint8_t line_sensor_pin[8];
-        uint8_t line_sensor_ir_pin;
+        RSLK_Motor lmotor;
+        RSLK_Motor rmotor;
+        RSLK_Encoder encoder[2];
+        RSLK_BPSW bp_sw[6];
+        RSLK_DistanceSensor dst_sensor[3];
 
-        uint8_t era_pin;
-        uint8_t erb_pin;
-        uint8_t ela_pin;
-        uint8_t elb_pin;
 
-        uint8_t cur_lmotor_speed;
-        uint8_t cur_rmotor_speed;
-
-        void configurePins();
 
 public:
     RSLKLib();
-    void configure();
+    void begin();
     void setLeftMotorSpeed(uint8_t speed);
     void setRightMotorSpeed(uint8_t speed);
     void enableMotor();
