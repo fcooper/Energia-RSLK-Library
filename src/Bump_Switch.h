@@ -1,6 +1,9 @@
+#ifndef Bump_Switch_h
+#define Bump_Switch_h
+
 #include "Energia.h"
 
-class RSLK_BPSW 
+class Bump_Switch 
 {
     private:
         uint8_t bump_sw_pin;
@@ -8,11 +11,11 @@ class RSLK_BPSW
         bool configured;
 
     public:
-        RSLK_BPSW();
-        bool begin();
-        bool configurePin(uint8_t pin_num, uint8_t state);
+        Bump_Switch();
+        bool begin(uint8_t pin_num, uint8_t state);
         bool read();
         bool enableInput();
         bool enableInputPullDown();
         bool enableInputPullUp();
 };
+#endif
