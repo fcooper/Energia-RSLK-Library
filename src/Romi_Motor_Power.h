@@ -1,3 +1,6 @@
+#ifndef Romi_Motor_Power_h
+#define Romi_Motor_Power_h
+
 #include "Energia.h"
 
 #define DIR_FW 1
@@ -7,7 +10,7 @@
 #define ENCA_COUNT_ENCB_COUNT 1
 #define ENCA_COUNT_ENCB_DIR 2
 
-class RSLK_Encoder
+class Romi_Motor_Power
 {
     private:
     	uint8_t slp_pin;
@@ -18,7 +21,7 @@ class RSLK_Encoder
        	uint8_t sleep_speed;
 
     public:
-		RSLK_Encoder();
+		Romi_Motor_Power();
 		bool begin(uint8_t islp_pin, uint8_t idir_pin,uint8_t ipwm_pin);
 		void disableMotor();
 		void enableMotor();
@@ -30,6 +33,6 @@ class RSLK_Encoder
 		bool setSpeedRaw(uint8_t speed);
 };
 
-
+#endif
 
 

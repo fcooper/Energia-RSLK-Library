@@ -1,61 +1,52 @@
-#include "RSLKLib.h"
+#include "Bump_Switch.h"
 
-
-RSLK_BPSW::RSLK_BPSW()
+Bump_Switch::Bump_Switch()
 {
     configured = false;
     num_pins = 0;
     bump_sw_pin = 0;
 }
 
-bool RSLK_BPSW::begin(uint8_t pin_num, uint8_t state) {
+bool Bump_Switch::begin(uint8_t pin_num, uint8_t state) {
     uint8_t  x;
 
     // This function shouldn't be called more than once or if the total amount
     // of pins were already allocated. Also validate parameter.
 
-    if(configured || num_pins == 0 )
-        return false;
-
-    if(state != INPUT || state != INPUT_PULLDOWN || state != INPUT_PULLUP)
-        return false;
 
     bump_sw_pin = pin_num;
 
     pinMode(bump_sw_pin,state);
 
 
-    configured = true;
+
 
     return true;
 
 }
 
-bool RSLK_BPSW::read() {
+bool Bump_Switch::read() {
 
-    if(!configured)
-        return false;
+
 
     return digitalRead(bump_sw_pin);
 }
 
-bool RSLK_BPSW::enableInput() {
+bool Bump_Switch::enableInput() {
 
 
     pinMode(bump_sw_pin, INPUT);
-
     return true;
 }
 
-bool RSLK_BPSW::enableInputPullDown() {
+bool Bump_Switch::enableInputPullDown() {
 
     pinMode(bump_sw_pin, INPUT_PULLDOWN);
-
     return true;
+
 }
 
-bool RSLK_BPSW::enableInputPullUp() {
+bool Bump_Switch::enableInputPullUp() {
     pinMode(bump_sw_pin, INPUT_PULLUP);
-
     return true;
 }

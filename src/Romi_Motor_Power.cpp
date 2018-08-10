@@ -1,7 +1,7 @@
-#include "RSLKLib.h"
+#include "Romi_Motor_Power.h"
 
 
-RSLK_Motor::RSLK_Encoder()
+Romi_Motor_Power::Romi_Motor_Power()
 {
     slp_pin = 0;
     dir_pin = 0;
@@ -17,10 +17,9 @@ RSLK_Motor::RSLK_Encoder()
     ENCA_COUNT_ENCB_DIR
 
 */
-bool RSLK_Motor::begin(uint8_t islp_pin, uint8_t idir_pin,uint8_t ipwm_pin) {
+bool Romi_Motor_Power::begin(uint8_t islp_pin, uint8_t idir_pin,uint8_t ipwm_pin) {
 
-    if(slp_pin == 0 || dir_pin == 0 || pwm_pin == 0)
-        return false;
+ 
 
     slp_pin = islp_pin;
     dir_pin = idir_pin;
@@ -31,50 +30,44 @@ bool RSLK_Motor::begin(uint8_t islp_pin, uint8_t idir_pin,uint8_t ipwm_pin) {
     pinMode(pwm_pin, OUTPUT);
 }
 
-void RSLK_Motor::disableMotor() {
+void Romi_Motor_Power::disableMotor() {
+	// Workaround (Sleep pin isn't working for now)
+	setSpeedRaw(0);
     digitalWrite(slp_pin, LOW);
 }
 
-void RSLK_Motor::enableMotor() {
+void Romi_Motor_Power::enableMotor() {
     digitalWrite(slp_pin, HIGH);
 }
 
-void RSLK_Motor::pauseMotor() {
+void Romi_Motor_Power::pauseMotor() {
     sleep_speed = preserve_speed;
     setSpeedRaw(0);
     disableMotor();
 }
 
-void RSLK_Motor::resumeMotor() {
+void Romi_Motor_Power::resumeMotor() {
     preserve_speed = sleep_speed;
     setSpeedRaw(preserve_speed);
     enableMotor();
 }
 
-void RSLK_Motor::directionForward() {
+void Romi_Motor_Power::directionForward() {
     digitalWrite(dir_pin, LOW);
 }
 
-void RSLK_Motor::directionBackward() {
+void Romi_Motor_Power::directionBackward() {
     digitalWrite(dir_pin, HIGH);
 }
 
-bool RSLKLib::setSpeed(uint8_t speed) {
-
-    if(speed > 100)
-        return false;
-
+bool Romi_Motor_Power::setSpeed(uint8_t speed) {
     speed = map(speed, 0, 100, 0, 255);
     preserve_speed = speed;
     analogWrite(pwm_pin, speed);
     return true;
 }
 
-bool RSLKLib::setSpeedRaw(uint8_t speed) {
-
-    if(speed > 255)
-        return false;
-
+bool Romi_Motor_Power::setSpeedRaw(uint8_t speed) {
     preserve_speed = speed;
     analogWrite(pwm_pin, speed);
 
