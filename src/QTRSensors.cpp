@@ -1,3 +1,11 @@
+/*
+This library was taken from Pololu's QTR library repository:
+https://github.com/pololu/qtr-sensors-arduino
+
+The goal is to keep this library in sync's with Pololu's version
+and only make minor modifications required to support Energia
+*/
+
 #include <stdlib.h>
 #include "QTRSensors.h"
 #include "Energia.h"

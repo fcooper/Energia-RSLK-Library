@@ -1,8 +1,17 @@
 /*
+This library was taken from Pololu's QTR library repository:
+https://github.com/pololu/qtr-sensors-arduino
+
+The goal is to keep this library in sync's with Pololu's version
+and only make minor modifications required to support Energia
+*/
+
+
+/*
   QTRSensors - library for using Pololu QTR reflectance sensors and reflectance
     sensor arrays.  The object used is determined by the type of the sensor
     (analog or RC; dimmable or non-dimmable).  Then simply specify in the
-    constructor which Arduino I/O pins are connected to a QTR sensor, and the
+    constructor which Arduino/Energia I/O pins are connected to a QTR sensor, and the
     read() method will obtain reflectance measurements for those sensors.
     Smaller sensor values correspond to higher reflectance (e.g.  white) while
     larger sensor values correspond to lower reflectance (e.g.  black or a
