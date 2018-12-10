@@ -13,6 +13,7 @@ class Bump_Switch
     public:
         Bump_Switch();
         bool begin(uint8_t pin_num, uint8_t state);
+        bool begin(uint8_t pin_num);
         bool read();
         bool enableInput();
         bool enableInputPullDown();

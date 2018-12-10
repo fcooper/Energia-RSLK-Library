@@ -8,39 +8,29 @@ Bump_Switch::Bump_Switch()
 }
 
 bool Bump_Switch::begin(uint8_t pin_num, uint8_t state) {
-    uint8_t  x;
-
-    // This function shouldn't be called more than once or if the total amount
-    // of pins were already allocated. Also validate parameter.
-
-
     bump_sw_pin = pin_num;
-
     pinMode(bump_sw_pin,state);
 
+    return true;
+}
 
-
+bool Bump_Switch::begin(uint8_t pin_num) {
+    bump_sw_pin = pin_num;
+    enableInputPullUp();
 
     return true;
-
 }
 
 bool Bump_Switch::read() {
-
-
-
     return digitalRead(bump_sw_pin);
 }
 
 bool Bump_Switch::enableInput() {
-
-
     pinMode(bump_sw_pin, INPUT);
     return true;
 }
 
 bool Bump_Switch::enableInputPullDown() {
-
     pinMode(bump_sw_pin, INPUT_PULLDOWN);
     return true;
 

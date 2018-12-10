@@ -1,4 +1,5 @@
 #include "Romi_Motor_Power.h"
+#include "Encoder.h"
 
 /* Defines pin configuration of robot */
 #include "Robot_Pins_v1.h"
@@ -30,53 +31,59 @@ void setup() {
                     MOTOR_R_DIR_PIN,
                     MOTOR_R_PWM_PIN);
 
+ /* setupEncoder(ENCODER_ERA_PIN,
+  			   ENCODER_ERB_PIN,
+  			   ENCODER_ELA_PIN,
+  			   ENCODER_ELB_PIN);
+   */        
   /* Right button on Launchpad */
   pinMode(PUSH2, INPUT_PULLUP);
+  Serial.begin(9600);
+  delay(1000);
+
+  Serial.println("frankie");
 }
 
 void loop() {
 
-  /* Wait until button is pressed to start robot */
-  while(digitalRead(PUSH2));
+	int default_speed = 30;
+
+	int left_wheel_speed = default_speed;
+	int right_wheel_speed = default_speed;
+
+	/* Wait until button is pressed to start robot */
+	while(digitalRead(PUSH2));
+
+	left_motor.directionForward();
+	right_motor.directionForward();
+
+	left_motor.enableMotor();
+	right_motor.enableMotor();
+
+	left_motor.setSpeed(30);
+	right_motor.setSpeed(30);
+	
 
   while(true)
   {
-    // Enable both motors
-    left_motor.enableMotor();
-    right_motor.enableMotor();
+    int count = getEncoderLeftCnt() - getEncoderRightCnt();
+    Serial.println(count);
+    if(count == 0 || (count < 3 && count > -3))
+      break;
 
-    // Set motor to 30% of its max speed
-    left_motor.setSpeed(30);
-    right_motor.setSpeed(30);
+    if(count > 0)
+      right_wheel_speed += 2;
+    else
+      left_wheel_speed += 2;
 
-    // Make the robot go forward for 2 seconds    
-    left_motor.directionForward();
-    right_motor.directionForward();
-    delay(2000);
-
-    // Make the robot go backwards for 2 second
-    left_motor.directionBackward();
-    right_motor.directionBackward();  
-    delay(2000);
-  
-    left_motor.directionForward();
-    right_motor.directionForward();
-
-    // Have the robot curve to the right for 1 second
-    left_motor.setSpeed(40);
-    delay(1000);
-    left_motor.setSpeed(30);
-    delay(2000);
-
-    // Have the robot curve to the left for 1 second
-    right_motor.setSpeed(40); 
-    delay(1000);
-    right_motor.setSpeed(30); 
-    delay(2000);
-
-    // Have the robot stop for 5 seconds
-    left_motor.disableMotor();
-    right_motor.disableMotor();
-    delay(5000);
+    left_motor.setSpeedRaw(left_wheel_speed); 
+    right_motor.setSpeedRaw(right_wheel_speed);
+    resetLeftEncoderCnt();
+    resetRightEncoderCnt();
+    delay(2000);  
+    
   }
+
+	delay(4000);
+
 }
