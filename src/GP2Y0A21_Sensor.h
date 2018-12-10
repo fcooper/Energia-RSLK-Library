@@ -12,7 +12,7 @@ class GP2Y0A21_Sensor
 
     public:
         GP2Y0A21_Sensor();
-        bool begin(uint8_t pin_num,uint8_t state);
+        bool begin(uint8_t pin_num,uint8_t state = INPUT_PULLDOWN);
         uint16_t read();
 };
 
