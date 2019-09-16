@@ -6,9 +6,9 @@ GP2Y0A21_Sensor::GP2Y0A21_Sensor()
     ir_sensor_pin = 0;
 }
 
-bool GP2Y0A21_Sensor::begin(uint8_t pin_num,uint8_t state) {
+bool GP2Y0A21_Sensor::begin(uint8_t pin_num,uint8_t mode) {
     ir_sensor_pin = pin_num;
-    pinMode(ir_sensor_pin, state);
+    pinMode(ir_sensor_pin, mode);
     return true;
 
 }

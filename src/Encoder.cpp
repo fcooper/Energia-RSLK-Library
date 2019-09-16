@@ -19,14 +19,14 @@ void triggerLeftEncoder() {
     enc_left_cnt++;
 
     /* The wheel direction can be determined by the second encoder pin */
-    enc_left_wheel_dir = digitalRead(_elb_pin); 
+    enc_left_wheel_dir = digitalRead(_ela_pin); 
 }
 
 void triggerRightEncoder() {
     enc_right_cnt++;
 
     /* The wheel direction can be determined by the second encoder pin */    
-    enc_right_wheel_dir = digitalRead(_erb_pin);   
+    enc_right_wheel_dir = digitalRead(_era_pin);   
 }
 
 void setupEncoder(uint8_t ela_pin, uint8_t elb_pin, uint8_t era_pin, uint8_t erb_pin) {
@@ -42,8 +42,8 @@ void setupEncoder(uint8_t ela_pin, uint8_t elb_pin, uint8_t era_pin, uint8_t erb
     pinMode(_erb_pin, INPUT_PULLDOWN );
 
     /* Only count the rising edge of the encoder */
-    attachInterrupt(digitalPinToInterrupt(era_pin),triggerRightEncoder,RISING);
-    attachInterrupt(digitalPinToInterrupt(ela_pin),triggerLeftEncoder,RISING);  
+    attachInterrupt(digitalPinToInterrupt(erb_pin),triggerRightEncoder,RISING);
+    attachInterrupt(digitalPinToInterrupt(elb_pin),triggerLeftEncoder,RISING);  
 }
 
 uint32_t getEncoderRightCnt() {
@@ -68,21 +68,3 @@ uint8_t getLeftWheelDir() {
 uint8_t getRightWheelDir() {
     return enc_right_wheel_dir;   
 }
-
-/* The distance the wheel turns per revolution is equal to the diameter * PI.
- * The distance the wheel turns per encoder pulse is equal to the above divided
- * by the number of pulses per revolution.
- */
-float distanceTraveled(float wheel_diam, uint16_t cnt_per_rev, uint8_t current_cnt) {
-    float temp = (wheel_diam * PI * current_cnt) / cnt_per_rev;
-    return temp;
-}
-
-
-uint32_t countForDistance(float wheel_diam, uint16_t cnt_per_rev, uint32_t distance) {
-    float temp = (wheel_diam * PI) / cnt_per_rev;
-    temp = distance / temp;
-    return int(temp);
-}
-
-

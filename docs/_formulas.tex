@@ -1,0 +1,18 @@
+\documentclass{article}
+\usepackage{ifthen}
+\usepackage{epsfig}
+\usepackage[utf8]{inputenc}
+\usepackage{newunicodechar}
+  \newunicodechar{⁻}{${}^{-}$}% Superscript minus
+  \newunicodechar{²}{${}^{2}$}% Superscript two
+  \newunicodechar{³}{${}^{3}$}% Superscript three
+
+\pagestyle{empty}
+\begin{document}
+$v_0$
+\pagebreak
+
+\[ {(0 \times v_0) + (1000 \times v_1) + (2000 \times v_2) + \cdots \over v_0 + v_1 + v_2 + \cdots} \]
+\pagebreak
+
+\end{document}
