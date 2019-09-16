@@ -1,12 +1,12 @@
 #include "Romi_Motor_Power.h"
 
-
 Romi_Motor_Power::Romi_Motor_Power()
 {
     slp_pin = 0;
     dir_pin = 0;
     pwm_pin = 0;
     motor_dir = 0;
+    preserve_speed = 0;
 }
 
 bool Romi_Motor_Power::begin(uint8_t _slp_pin, uint8_t _dir_pin,uint8_t _pwm_pin) {
@@ -22,8 +22,7 @@ bool Romi_Motor_Power::begin(uint8_t _slp_pin, uint8_t _dir_pin,uint8_t _pwm_pin
 }
 
 void Romi_Motor_Power::disableMotor() {
-	// Workaround (Sleep pin isn't working for now)
-	setSpeedRaw(0);
+	setRawSpeed(0);
     digitalWrite(slp_pin, LOW);
 }
 
@@ -39,13 +38,21 @@ void Romi_Motor_Power::directionBackward() {
     digitalWrite(dir_pin, HIGH);
 }
 
-bool Romi_Motor_Power::setSpeed(uint8_t speed) {
-    speed = map(speed, 0, 100, 0, 255);
-    analogWrite(pwm_pin, speed);
-    return true;
+void Romi_Motor_Power::pauseMotor() {
+    disableMotor();
 }
 
-bool Romi_Motor_Power::setSpeedRaw(uint8_t speed) {
+void Romi_Motor_Power::resumeMotor() {
+    setRawSpeed(preserve_speed);
+    enableMotor();
+}
+
+void Romi_Motor_Power::setSpeed(uint8_t speed) {
+    speed = map(speed, 0, 100, 0, 255);
+    setRawSpeed(speed);
+}
+
+void Romi_Motor_Power::setRawSpeed(uint8_t speed) {
+    preserve_speed = speed;
     analogWrite(pwm_pin, speed);
-    return true;
 }
