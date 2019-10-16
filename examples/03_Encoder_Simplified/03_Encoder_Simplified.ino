@@ -25,7 +25,7 @@
 #include "SimpleRSLK.h"
  
 /* Diameter of Romi wheels in inches */
-float wheelDiameter = 2.7559055
+float wheelDiameter = 2.7559055;
 
 /* Number of encoder (rising) pulses every time the wheel turns completely */
 int cntPerRevolution = 360;
@@ -87,9 +87,9 @@ void loop() {
 	setMotorSpeed(BOTH_MOTORS,wheelSpeed);
 
 	/* Drive motor until it has received x pulses */
-	while(total_count < x)
+	while(totalCount < x)
 	{
-		total_count = getEncoderLeftCnt();
+		totalCount = getEncoderLeftCnt();
 		Serial.println(totalCount);
 	}
 
