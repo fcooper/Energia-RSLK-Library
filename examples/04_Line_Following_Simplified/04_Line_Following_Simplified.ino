@@ -30,9 +30,10 @@
 
 #include "SimpleRSLK.h"
 
+uint16_t sensorVal[LS_NUM_SENSORS];
+uint16_t sensorCalVal[LS_NUM_SENSORS];
 uint16_t sensorMaxVal[LS_NUM_SENSORS];
 uint16_t sensorMinVal[LS_NUM_SENSORS];
-
 
 void setup()
 {
@@ -43,9 +44,12 @@ void setup()
 	setupWaitBtn(LP_LEFT_BTN);
 	/* Red led in rgb led */
 	setupLed(RED_LED);
-
 	clearMinMax(sensorMinVal,sensorMaxVal);
+}
 
+void floorCalibration() {
+	/* Place Robot On Floor (no line) */
+	delay(2000);
 	String btnMsg = "Push left button on Launchpad to begin calibration.\n";
 	btnMsg += "Make sure the robot is on the floor away from the line.\n";
 	/* Wait until button is pressed to start robot */
@@ -55,6 +59,7 @@ void setup()
 
 	Serial.println("Running calibration on floor");
 	simpleCalibrate();
+	Serial.println("Reading floor values complete");
 
 	btnMsg = "Push left button on Launchpad to begin line following.\n";
 	btnMsg += "Make sure the robot is on the line.\n";
@@ -66,63 +71,57 @@ void setup()
 }
 
 void simpleCalibrate() {
-	int16_t count;
-	uint16_t sensorVal[LS_NUM_SENSORS];
-
+	/* Set both motors direction forward */
 	setMotorDirection(BOTH_MOTORS,MOTOR_DIR_FORWARD);
-	setMotorSpeed(BOTH_MOTORS,20);
+	/* Enable both motors */
 	enableMotor(BOTH_MOTORS);
+	/* Set both motors speed 20 */
+	setMotorSpeed(BOTH_MOTORS,20);
 
-	count = getEncoderLeftCnt();
-	while(getEncoderLeftCnt() < count + 200) {
+	for(int x = 0;x<100;x++){
 		readLineSensor(sensorVal);
 		setSensorMinMax(sensorVal,sensorMinVal,sensorMaxVal);
 	}
 
-	pauseMotor(BOTH_MOTORS);
-	delay(1000);
-	setMotorDirection(BOTH_MOTORS,MOTOR_DIR_BACKWARD);
-
-	resumeMotor(BOTH_MOTORS);
-	enableMotor(BOTH_MOTORS);
-	setMotorSpeed(BOTH_MOTORS,20);
-	count = getEncoderLeftCnt();
-	while(getEncoderLeftCnt() < count + 200) {
-		readLineSensor(sensorVal);
-		setSensorMinMax(sensorVal,sensorMinVal,sensorMaxVal);
-	}
-
-	pauseMotor(BOTH_MOTORS);
-	setMotorDirection(BOTH_MOTORS,MOTOR_DIR_FORWARD);
+	/* Disable both motors */
+	disableMotor(BOTH_MOTORS);
 }
 
-
+bool isCalibrationComplete = false;
 void loop()
 {
-	uint16_t  calVal[LS_NUM_SENSORS];
-	uint16_t sensorVal[LS_NUM_SENSORS];
+	uint16_t normalSpeed = 10;
+	uint16_t fastSpeed = 20;
+
+	/* Valid values are either:
+	 *  DARK_LINE  if your floor is lighter than your line
+	 *  LIGHT_LINE if your floor is darker than your line
+	 */
+	uint8_t lineColor = DARK_LINE;
+
+	/* Run this setup only once */
+	if(isCalibrationComplete == false) {
+		floorCalibration();
+		isCalibrationComplete = true;
+	}
 
 	readLineSensor(sensorVal);
 	readCalLineSensor(sensorVal,
-					  calVal,
+					  sensorCalVal,
 					  sensorMinVal,
 					  sensorMaxVal,
-					  DARK_LINE);
+					  lineColor);
 
-	uint32_t linePos = getLinePosition(calVal,1);
+	uint32_t linePos = getLinePosition(sensorCalVal,lineColor);
 
-	setMotorDirection(BOTH_MOTORS,MOTOR_DIR_FORWARD);
-	if(linePos <= 3000) {
-		/* Spin the robot counter clock wise */
-		setMotorSpeed(LEFT_MOTOR,10);
-		setMotorSpeed(RIGHT_MOTOR,15);
-
-	} else if(linePos >= 3500) {
-		/* Spin the robot clock wise */
-		setMotorSpeed(LEFT_MOTOR,15);
-		setMotorSpeed(RIGHT_MOTOR,10);
+	if(linePos > 0 && linePos < 3000) {
+		setMotorSpeed(LEFT_MOTOR,normalSpeed);
+		setMotorSpeed(RIGHT_MOTOR,fastSpeed);
+	} else if(linePos > 3500) {
+		setMotorSpeed(LEFT_MOTOR,fastSpeed);
+		setMotorSpeed(RIGHT_MOTOR,normalSpeed);
 	} else {
-		/* Drive forward */
-		setMotorSpeed(BOTH_MOTORS,10);
+		setMotorSpeed(LEFT_MOTOR,normalSpeed);
+		setMotorSpeed(RIGHT_MOTOR,normalSpeed);
 	}
 }
