@@ -43,7 +43,7 @@ void setup()
 	setupWaitBtn(PUSH2);
 	clearMinMax(sensorMinVal,sensorMaxVal);
 	Serial.println("");
-	Serial.println("Push left button to start"); 
+	Serial.println("Push left button to start");
 	waitBtnPressed(PUSH2);
 	delay(1000);
 

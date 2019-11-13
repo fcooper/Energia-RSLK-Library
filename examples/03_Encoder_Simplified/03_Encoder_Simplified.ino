@@ -23,7 +23,7 @@
  */
 
 #include "SimpleRSLK.h"
- 
+
 /* Diameter of Romi wheels in inches */
 float wheelDiameter = 2.7559055;
 
@@ -66,7 +66,7 @@ void loop() {
 	uint16_t x = countForDistance(wheelDiameter, cntPerRevolution, inchesToTravel);
 	Serial.print("Expected count: ");
 	Serial.println(x);
-  
+
 	/* Wait until button is pressed to start robot */
 	Serial.println("Push left button on Launchpad to start demo");
 	waitBtnPressed(PUSH1);

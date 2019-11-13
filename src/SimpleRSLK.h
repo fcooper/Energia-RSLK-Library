@@ -11,50 +11,47 @@
 
 
 /**
-  * @brief   Total number of sensors on QTR line sensor.
-  */
+ * @brief   Total number of sensors on QTR line sensor.
+ */
 #define LS_NUM_SENSORS   8     // number of sensors used
 
-/*
+/**
  * @brief   Total number of bump switches.
  */
 #define TOTAL_BP_SW 6
 /**
-  * @brief   Can be used to reference the left motor in the below functions.
-  */
+ * @brief   Can be used to reference the left motor in the below functions.
+ */
 #define LEFT_MOTOR 0
 /**
-  * @brief   Can be used to reference the right motor in the below functions.
-  */
+ * @brief   Can be used to reference the right motor in the below functions.
+ */
 #define RIGHT_MOTOR 1
 /**
-  * @brief   Can be used to reference  both motors in the below functions.
-  */
+ * @brief   Can be used to reference  both motors in the below functions.
+ */
 #define BOTH_MOTORS 2
-
 /**
-  * @brief   Can be used to reference setting the motor function to forward.
-  */
+ * @brief   Can be used to reference setting the motor function to forward.
+ */
 #define MOTOR_DIR_FORWARD 0
 /**
-  * @brief   Can be used to reference setting the motor function to backward.
-  */
+ * @brief   Can be used to reference setting the motor function to backward.
+ */
 #define MOTOR_DIR_BACKWARD 1
-
 /**
-  * @brief   Can be used to reference setting the motor function to backward.
-  */
+ * @brief   Can be used to reference setting the motor function to backward.
+ */
 #define DARK_LINE 0
-
 /**
-  * @brief   Can be used to reference setting the motor function to backward.
-  */
+ * @brief   Can be used to reference setting the motor function to backward.
+ */
 #define LIGHT_LINE 1
 
 /// \brief Performs a variety of initialization needed for the RSLK.
 ///
 /// This function must be called before calling any other functions listed on this page.
-/// 
+///
 void setupRSLK();
 
 /// \brief Read distance sensor value.
@@ -68,7 +65,7 @@ void setupRSLK();
 /// - 0 represents object right infront of sensor
 /// - ....
 /// - 4065 represents no object detected
-/// 
+///
 uint16_t readSharpDist(uint8_t num);
 
 /// \brief Return bump switch status
@@ -81,7 +78,7 @@ uint16_t readSharpDist(uint8_t num);
 /// - true if switch is pressed
 /// - false if switch isn't pressed.
 ///
-/// 
+///
 bool isBumpSwitchPressed(uint8_t num);
 
 /// \brief Enable motor (take it out of sleep)
@@ -147,7 +144,7 @@ void setMotorDirection(uint8_t motorNum,uint8_t direction);
 ///
 /// \param[in] speed that specifies the motor speed. Valid values are 0 - 100.
 /// - 0 for 0% of motor speed.
-/// - ... 
+/// - ...
 /// - 100 for 100% of motor speed.
 ///
 /// Sets the speed of the motor. A value of 0 means no movement. 100 will set the motor to its fastest
@@ -202,7 +199,7 @@ void clearMinMax(uint16_t *sensorMin,uint16_t *sensorMax);
 ///
 /// \param[out] sensorMax stores sensor's max values.
 ///
-///  Take the current line sensor values and update min and max values. This function along with the 
+///  Take the current line sensor values and update min and max values. This function along with the
 ///  min and max arrays are useful when performing calibration.
 void setSensorMinMax(uint16_t *sensor,uint16_t *sensorMin,uint16_t *sensorMax);
 
@@ -215,7 +212,7 @@ void setSensorMinMax(uint16_t *sensor,uint16_t *sensorMin,uint16_t *sensorMax);
 /// sensorMin and sensorMax array. @n
 /// Elements will be filled with values of 0 - 1000
 /// - 0 means no line detected
-/// - ... 
+/// - ...
 /// - 1000 means line is detected right under sensor.
 ///
 /// \param[in] sensorMin stores sensor's min values.
@@ -225,12 +222,12 @@ void setSensorMinMax(uint16_t *sensor,uint16_t *sensorMin,uint16_t *sensorMax);
 /// \param[in] mode determines if the line is dark or light.
 /// - 0 is used when the line is darker than the floor
 /// - 1 is used when the line is lighter than the floor.
-/// 
+///
 /// Takes the current line sensor values and sets calVal to the calibrated values. Uses
 /// sensorMin and sensorMax array along with mode to calibrate value. @n @n
 ///
 /// Calibration:
-/// - When the line is dark then calibration subtracts sensorMax values from the sensor value read. 
+/// - When the line is dark then calibration subtracts sensorMax values from the sensor value read.
 /// - When the line is light then calibration subtracts sensorMin values from the sensor value read.
 /// Then the value is subtracted from 1000 to provide a consistent scale.
 void readCalLineSensor(uint16_t* sensor,
@@ -251,7 +248,7 @@ void readCalLineSensor(uint16_t* sensor,
 ///  - ...
 ///  - 1000 line is directly on the left most sensor
 ///  - ...
-///  - 3500 line directly over two middle sensors. 
+///  - 3500 line directly over two middle sensors.
 ///  - ...
 ///  - 7000 is under right most line sensor
 ///

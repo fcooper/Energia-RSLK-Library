@@ -27,25 +27,25 @@
 int motorSpeed = 10;
 
 void setup() {
-  Serial.begin(115200);
-  delay(500);
+	Serial.begin(115200);
+	delay(500);
 	setupRSLK();
-  setupWaitBtn(PUSH1);
+	setupWaitBtn(PUSH1);
 }
 
 void loop() {
 	bool hitObstacle = false;
-  
-  /* Left button on Launchpad */
-  Serial.println("Push left button on Launchpad to start demo");
-  waitBtnPressed(PUSH1);
 
-  /* Wait two seconds before starting */
-  delay(2000);
-  
-  /* Enable both motors, set their direction and provide a default speed */
+	/* Left button on Launchpad */
+	Serial.println("Push left button on Launchpad to start demo");
+	waitBtnPressed(PUSH1);
+
+	/* Wait two seconds before starting */
+	delay(2000);
+
+	/* Enable both motors, set their direction and provide a default speed */
 	enableMotor(BOTH_MOTORS);
-  setMotorDirection(BOTH_MOTORS,MOTOR_DIR_FORWARD);
+	setMotorDirection(BOTH_MOTORS,MOTOR_DIR_FORWARD);
 	setMotorSpeed(BOTH_MOTORS,motorSpeed);
 
   /* Keep checking if the robot has hit an object */
@@ -53,7 +53,7 @@ void loop() {
 		/* Loop through all bump switchees to see if it has been pressed */
 		for(int x = 0;x<TOTAL_BP_SW;x++)
 		{
-      /* Check if bump switch was pressed */
+			/* Check if bump switch was pressed */
 			if(isBumpSwitchPressed(x) == true) {
 				hitObstacle = true;
 				break;
@@ -61,6 +61,6 @@ void loop() {
 		}
 	}
 
-  Serial.println("Collision detected");
+	Serial.println("Collision detected");
 	disableMotor(BOTH_MOTORS);
 }

@@ -11,7 +11,7 @@
  * 2) Robot will drive forward until the bump switches are triggered
  * 3) Once switches are triggered the robot will halt.
  * 4) Push left button again to start demo
- * 
+ *
  * Learn more about the classes, variables and functions used in this library by going to:
  * https://fcooper.github.io/Robot-Library/
  *
@@ -33,10 +33,10 @@ Romi_Motor_Power right_motor;
 int motorSpeed = 10;
 
 void waitBtnPressed() {
-  while(digitalRead(LEFT_BTN) == 1);
-  delay(50);
-  while(digitalRead(LEFT_BTN) == 0);
-  delay(50);
+	while(digitalRead(LEFT_BTN) == 1);
+	delay(50);
+	while(digitalRead(LEFT_BTN) == 0);
+	delay(50);
 }
 
 void setup() {
@@ -70,8 +70,8 @@ void loop() {
 	/* Enable both motors */
 	left_motor.enableMotor();
 	right_motor.enableMotor();
- 
- 	/* Set both motors direction to forward */
+
+	/* Set both motors direction to forward */
 	left_motor.directionForward();
 	right_motor.directionForward();
 
@@ -87,7 +87,7 @@ void loop() {
 			break;
 
 		if(digitalRead(BP_SW_PIN_1) == 0)
-			break;      
+			break;
 
 		if(digitalRead(BP_SW_PIN_2) == 0)
 			break;
@@ -102,7 +102,7 @@ void loop() {
 			break;
 	}
 
-    Serial.println("Collision detected");
-    left_motor.disableMotor();
-    right_motor.disableMotor();	
+	Serial.println("Collision detected");
+	left_motor.disableMotor();
+	right_motor.disableMotor();
 }
