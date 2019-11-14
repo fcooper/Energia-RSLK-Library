@@ -16,6 +16,16 @@
 #define LS_NUM_SENSORS   8     // number of sensors used
 
 /**
+ * @brief   Represent the left push button on the launchpad
+ */
+#define LP_LEFT_BTN  PUSH2
+
+/**
+ * @brief   Represent the right push button on the launchpad
+ */
+#define LP_RIGHT_BTN  PUSH1
+
+/**
  * @brief   Total number of bump switches.
  */
 #define TOTAL_BP_SW 6
