@@ -50,11 +50,11 @@
  */
 #define MOTOR_DIR_BACKWARD 1
 /**
- * @brief   Can be used to reference setting the motor function to backward.
+ * @brief   Used to specify that the robot is running on a floor lighter than the line
  */
 #define DARK_LINE 0
 /**
- * @brief   Can be used to reference setting the motor function to backward.
+ * @brief   Used to specify that the robot is running on a floor darker than the line
  */
 #define LIGHT_LINE 1
 
