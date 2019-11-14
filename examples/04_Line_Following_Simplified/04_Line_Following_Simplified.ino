@@ -37,21 +37,29 @@ uint16_t sensorMinVal[LS_NUM_SENSORS];
 void setup()
 {
 	Serial.begin(115200);
-	delay(500);
 
 	setupRSLK();
-	setupWaitBtn(PUSH2);
+	/* Left button on Launchpad */
+	setupWaitBtn(LP_LEFT_BTN);
+	/* Red led in rgb led */
+	setupLed(RED_LED);
+
 	clearMinMax(sensorMinVal,sensorMaxVal);
-	Serial.println("");
-	Serial.println("Push left button to start");
-	waitBtnPressed(PUSH2);
+
+	String btnMsg = "Push left button on Launchpad to begin calibration.\n";
+	btnMsg += "Make sure the robot is on the floor away from the line.\n";
+	/* Wait until button is pressed to start robot */
+	waitBtnPressed(LP_LEFT_BTN,btnMsg,RED_LED);
+
 	delay(1000);
 
 	Serial.println("Running calibration on floor");
 	simpleCalibrate();
 
-	Serial.println("Push left button to begin line following");
-	waitBtnPressed(PUSH2);
+	btnMsg = "Push left button on Launchpad to begin line following.\n";
+	btnMsg += "Make sure the robot is on the line.\n";
+	/* Wait until button is pressed to start robot */
+	waitBtnPressed(LP_LEFT_BTN,btnMsg,RED_LED);
 	delay(1000);
 
 	enableMotor(BOTH_MOTORS);
