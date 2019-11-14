@@ -28,17 +28,19 @@ int motorSpeed = 10;
 
 void setup() {
 	Serial.begin(115200);
-	delay(500);
 	setupRSLK();
-	setupWaitBtn(PUSH1);
+	/* Left button on Launchpad */
+	setupWaitBtn(LP_LEFT_BTN);
+	/* Red led in rgb led */
+	setupLed(RED_LED);
 }
 
 void loop() {
 	bool hitObstacle = false;
 
-	/* Left button on Launchpad */
-	Serial.println("Push left button on Launchpad to start demo");
-	waitBtnPressed(PUSH1);
+	String btnMsg = "Push left button on Launchpad to start demo.\n";
+	/* Wait until button is pressed to start robot */
+	waitBtnPressed(LP_LEFT_BTN,btnMsg,RED_LED);
 
 	/* Wait two seconds before starting */
 	delay(2000);
@@ -48,7 +50,7 @@ void loop() {
 	setMotorDirection(BOTH_MOTORS,MOTOR_DIR_FORWARD);
 	setMotorSpeed(BOTH_MOTORS,motorSpeed);
 
-  /* Keep checking if the robot has hit an object */
+	/* Keep checking if the robot has hit an object */
 	while(!hitObstacle) {
 		/* Loop through all bump switchees to see if it has been pressed */
 		for(int x = 0;x<TOTAL_BP_SW;x++)
