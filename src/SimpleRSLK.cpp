@@ -64,7 +64,6 @@ void enableMotor(uint8_t motorNum) {
 	{
 		motor[1].enableMotor();
 	}
-
 }
 
 
@@ -78,7 +77,6 @@ void disableMotor(uint8_t motorNum) {
 	{
 		motor[1].disableMotor();
 	}
-
 }
 
 void pauseMotor(uint8_t motorNum) {
@@ -106,7 +104,6 @@ void resumeMotor(uint8_t motorNum) {
 }
 
 void setMotorDirection(uint8_t motorNum,uint8_t direction) {
-
 	if(motorNum == 0 || motorNum == 2)
 	{
 		if(direction == 0) {
@@ -186,7 +183,6 @@ void readCalLineSensor(uint16_t* sensorValues,
 
 uint32_t getLinePosition(uint16_t* calVal, uint8_t mode)
 {
-
 	uint32_t avg = 0; // this is for the weighted total
 	uint32_t sum = 0; // this is for the denominator, which is <= 64000
 

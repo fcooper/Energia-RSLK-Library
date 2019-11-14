@@ -9,7 +9,6 @@
 #ifndef SimpleRSLK_h
 #define SimpleRSLK_h
 
-
 /**
  * @brief   Total number of sensors on QTR line sensor.
  */
@@ -29,30 +28,37 @@
  * @brief   Total number of bump switches.
  */
 #define TOTAL_BP_SW 6
+
 /**
  * @brief   Can be used to reference the left motor in the below functions.
  */
 #define LEFT_MOTOR 0
+
 /**
  * @brief   Can be used to reference the right motor in the below functions.
  */
 #define RIGHT_MOTOR 1
+
 /**
  * @brief   Can be used to reference  both motors in the below functions.
  */
 #define BOTH_MOTORS 2
+
 /**
  * @brief   Can be used to reference setting the motor function to forward.
  */
 #define MOTOR_DIR_FORWARD 0
+
 /**
  * @brief   Can be used to reference setting the motor function to backward.
  */
 #define MOTOR_DIR_BACKWARD 1
+
 /**
  * @brief   Used to specify that the robot is running on a floor lighter than the line
  */
 #define DARK_LINE 0
+
 /**
  * @brief   Used to specify that the robot is running on a floor darker than the line
  */
@@ -274,5 +280,4 @@ void readCalLineSensor(uint16_t* sensor,
 ///  Using calibrated line sensor value this function provides a numerical value indicating
 ///  where the robot is detecting the line. This function can be overridden.
 uint32_t getLinePosition(uint16_t* calVal, uint8_t mode);
-
 #endif
