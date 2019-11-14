@@ -33,7 +33,7 @@ int cntPerRevolution = 360;
 /* How far in inches for the robot to travel */
 int inchesToTravel = 6;
 
-int wheelSpeed = 10; // Default raw pwm speed for motor.
+int wheelSpeed = 15; // Default raw pwm speed for motor.
 
 /* The distance the wheel turns per revolution is equal to the diameter * PI.
  * The distance the wheel turns per encoder pulse is equal to the above divided
@@ -53,10 +53,12 @@ uint32_t countForDistance(float wheel_diam, uint16_t cnt_per_rev, uint32_t dista
 
 void setup() {
 	Serial.begin(115200);
-	delay(500);
-	setupRSLK();
 
-	setupWaitBtn(PUSH1);
+	setupRSLK();
+	/* Left button on Launchpad */
+	setupWaitBtn(LP_LEFT_BTN);
+	/* Red led in rgb led */
+	setupLed(RED_LED);
 }
 
 void loop() {
@@ -64,12 +66,13 @@ void loop() {
 
 	/* Amount of encoder pulses needed to achieve distance */
 	uint16_t x = countForDistance(wheelDiameter, cntPerRevolution, inchesToTravel);
-	Serial.print("Expected count: ");
-	Serial.println(x);
+	String btnMsg = "Expected count: ";
+	btnMsg += x;
 
 	/* Wait until button is pressed to start robot */
-	Serial.println("Push left button on Launchpad to start demo");
-	waitBtnPressed(PUSH1);
+	btnMsg += "\nPush left button on Launchpad to start demo.\n";
+	/* Wait until button is pressed to start robot */
+	waitBtnPressed(LP_LEFT_BTN,btnMsg,RED_LED);
 
 	delay(2000);
 
