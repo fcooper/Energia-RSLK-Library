@@ -225,10 +225,34 @@ void setupWaitBtn(uint8_t btn) {
 	pinMode(btn, INPUT_PULLUP);
 }
 
-void waitBtnPressed(uint8_t btn) {
-	while(digitalRead(btn) == 1);
-	Serial.println("Button pressed");
+void waitBtnPressed(uint8_t btnPin,String msg,int8_t ledPin) {
+	uint8_t btnCnt = 0;
+	uint8_t pinVal = HIGH;
+
+	/* Turn on led */
+	if(ledPin > 0)
+		digitalWrite(ledPin,pinVal);
+	while(digitalRead(btnPin) == 1) {
+		delay(25);
+		btnCnt++;
+		if(btnCnt==40) {
+			digitalWrite(ledPin,pinVal);
+			btnCnt = 0;
+			pinVal = !pinVal;
+
+			if( msg != "")
+				Serial.println(msg);
+		}
+	}
+
+	pinVal = LOW;
+	if(ledPin > 0)
+		digitalWrite(ledPin,pinVal);
+
+	/* Wait for a short period to avoid button debounce */
 	delay(50);
-	while(digitalRead(btn) == 0);
+	while(digitalRead(btnPin) == 0);
+
+	/* Wait for a short period to avoid button debounce */
 	delay(50);
 }

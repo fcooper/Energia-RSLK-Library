@@ -174,11 +174,13 @@ void setupWaitBtn(uint8_t btn);
 
 /// \brief Busy wait until user pushes and releases button
 ///
-/// \param[in] btn the Launchpad pin number you want to use.
+/// \param[in] btnPin the Launchpad pin number you want to use.
+/// \param[in] msg contains the string to output while waiting for btn to be pressed.
+/// \param[in] ledPin represents the pin to toggle high and low while waiting for btn to be pressed.
 ///
 /// Prevent additional code from executing until use has pushed and released
 /// specified button.
-void waitBtnPressed(uint8_t btn);
+void waitBtnPressed(uint8_t btnPin,String msg = "",int8_t ledPin = 0);
 
 /// \brief Provide default values for the sensor's Min and Max arrays.
 ///
