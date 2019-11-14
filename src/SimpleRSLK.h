@@ -172,6 +172,13 @@ void readLineSensor(uint16_t *sensor);
 /// operation until the uses pushes and then releases the button.
 void setupWaitBtn(uint8_t btn);
 
+/// \brief Configure pin that is connected to an led
+///
+/// \param[in] ledPin the Launchpad pin number you want to use.
+///
+/// Configure pin to be used for as an led.
+void setupLed(uint8_t ledPin);
+
 /// \brief Busy wait until user pushes and releases button
 ///
 /// \param[in] btnPin the Launchpad pin number you want to use.

@@ -225,6 +225,10 @@ void setupWaitBtn(uint8_t btn) {
 	pinMode(btn, INPUT_PULLUP);
 }
 
+void setupLed(uint8_t ledPin) {
+	pinMode(ledPin, OUTPUT);
+}
+
 void waitBtnPressed(uint8_t btnPin,String msg,int8_t ledPin) {
 	uint8_t btnCnt = 0;
 	uint8_t pinVal = HIGH;
