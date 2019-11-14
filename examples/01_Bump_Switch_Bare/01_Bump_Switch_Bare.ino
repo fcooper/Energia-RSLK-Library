@@ -25,23 +25,14 @@
 #include "Romi_Motor_Power.h"
 /* Defines pin configuration of robot */
 #include "RSLK_Pins.h"
+#include "SimpleRSLK.h"
 
 Romi_Motor_Power left_motor;
 Romi_Motor_Power right_motor;
-
-#define LEFT_BTN	PUSH1
 int motorSpeed = 10;
 
-void waitBtnPressed() {
-	while(digitalRead(LEFT_BTN) == 1);
-	delay(50);
-	while(digitalRead(LEFT_BTN) == 0);
-	delay(50);
-}
-
 void setup() {
-	Serial.begin(9600);
-	delay(500);
+	Serial.begin(115200);
 
 	left_motor.begin(MOTOR_L_SLP_PIN,
 					 MOTOR_L_DIR_PIN,
@@ -58,14 +49,16 @@ void setup() {
 	pinMode(BP_SW_PIN_4,INPUT_PULLUP);
 	pinMode(BP_SW_PIN_5,INPUT_PULLUP);
 
-  /* Left button on Launchpad */
-  pinMode(LEFT_BTN, INPUT_PULLUP);
+	/* Left button on Launchpad */
+	pinMode(LP_LEFT_BTN, INPUT_PULLUP);
+	/* Red led in rgb led */
+	pinMode(RED_LED,OUTPUT);
 }
 
 void loop() {
-	Serial.println("Push left button on Launchpad to start demo");
+	String btnMsg = "Push left button on Launchpad to start demo.\n";
 	/* Wait until button is pressed to start robot */
-	waitBtnPressed();
+	waitBtnPressed(LP_LEFT_BTN,btnMsg,RED_LED);
 
 	/* Enable both motors */
 	left_motor.enableMotor();
